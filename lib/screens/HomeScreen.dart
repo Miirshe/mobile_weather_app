@@ -35,24 +35,64 @@ class HomeScreen extends StatelessWidget {
                   Colors.black.withOpacity(0.2), BlendMode.darken)),
         ),
         child: Center(
-          child: RichText(
-            text: TextSpan(
-              text: 'Welcome to',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300,height: 1.5),
-              children: [
-                TextSpan(
-                  text: '\nCloud $appName 🌦️',
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w600),
+          child: Column(
+            mainAxisAlignment : MainAxisAlignment.center,
+            children: [
+              RichText(
+                text: TextSpan(
+                  text: 'Mogadishu,SO',
+                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w600,height: 1.5),
+                  children: [
+                    TextSpan(
+                      text: '\nupdated 5:45 AM EAT , 25/10/2023',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300,height:1.5),
+                    ),
+                    TextSpan(
+                      text: '\n20.9°',
+                      style: TextStyle(fontSize: 34, fontWeight: FontWeight.w900,height:2),
+                    ),
+                    TextSpan(
+                      text: 'C',
+                      style: TextStyle(fontSize: 34, fontWeight: FontWeight.w300,height:3),
+                    )
+                    ,
+                    TextSpan(
+                      text: '\n Light Rain ',
+                      style: TextStyle(fontSize: 27, fontWeight: FontWeight.w300,),
+                    ),
+                  ]
+                ),
+                textAlign: TextAlign.center,
+              ),
+              IconButton(
+                  onPressed : (){},
+                  icon : Icon(Icons.refresh,size:40)
                 )
-              ]
-            ),
-            textAlign: TextAlign.center,
+            ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black.withOpacity(0.8),
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context : context,
+            builder : (context){
+              return AlertDialog(
+                title : Text('🌦️ $appName',style:TextStyle(fontSize : 24),),
+                content : Text('Weather app is application shows you'),
+                actions : [
+                  TextButton(
+                    child :Text('ok, go it'),
+                    onPressed : (){
+                      Navigator.pop(context);
+                    }
+                  )
+                ]
+              );
+            }
+          );
+        },
         child: Icon(
           Icons.info,
           size: 40,
