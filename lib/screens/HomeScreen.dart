@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geolocator/geolocator.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String appName;
   HomeScreen({required this.appName});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void getMyLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print('latitude : ${position.latitude} , longitude : ${position.longitude}');
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -11,12 +22,12 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          '🌦️ $appName',
+          '🌦️ ${widget.appName}',
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => getMyLocation,
             icon: Icon(Icons.pin_drop_outlined),
           ),
           IconButton(
@@ -36,38 +47,46 @@ class HomeScreen extends StatelessWidget {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment : MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RichText(
                 text: TextSpan(
-                  text: 'Mogadishu,SO',
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w600,height: 1.5),
-                  children: [
-                    TextSpan(
-                      text: '\nupdated 5:45 AM EAT , 25/10/2023',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300,height:1.5),
-                    ),
-                    TextSpan(
-                      text: '\n20.9°',
-                      style: TextStyle(fontSize: 34, fontWeight: FontWeight.w900,height:2),
-                    ),
-                    TextSpan(
-                      text: 'C',
-                      style: TextStyle(fontSize: 34, fontWeight: FontWeight.w300,height:3),
-                    )
-                    ,
-                    TextSpan(
-                      text: '\n Light Rain ',
-                      style: TextStyle(fontSize: 27, fontWeight: FontWeight.w300,),
-                    ),
-                  ]
-                ),
+                    text: 'Mogadishu,SO',
+                    style: TextStyle(
+                        fontSize: 27, fontWeight: FontWeight.w600, height: 1.5),
+                    children: [
+                      TextSpan(
+                        text: '\nupdated 5:45 AM EAT , 25/10/2023',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            height: 1.5),
+                      ),
+                      TextSpan(
+                        text: '\n20.9°',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.w900,
+                            height: 2),
+                      ),
+                      TextSpan(
+                        text: 'C',
+                        style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.w300,
+                            height: 3),
+                      ),
+                      TextSpan(
+                        text: '\n Light Rain ',
+                        style: TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ]),
                 textAlign: TextAlign.center,
               ),
-              IconButton(
-                  onPressed : (){},
-                  icon : Icon(Icons.refresh,size:40)
-                )
+              IconButton(onPressed: () {}, icon: Icon(Icons.refresh, size: 40))
             ],
           ),
         ),
@@ -76,22 +95,22 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.black.withOpacity(0.8),
         onPressed: () {
           showDialog(
-            context : context,
-            builder : (context){
-              return AlertDialog(
-                title : Text('🌦️ $appName',style:TextStyle(fontSize : 24),),
-                content : Text('Weather app is application shows you'),
-                actions : [
-                  TextButton(
-                    child :Text('ok, go it'),
-                    onPressed : (){
-                      Navigator.pop(context);
-                    }
-                  )
-                ]
-              );
-            }
-          );
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                    title: Text(
+                      '🌦️ ${widget.appName}',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    content: Text('Weather app is application shows you'),
+                    actions: [
+                      TextButton(
+                          child: Text('ok, go it'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                    ]);
+              });
         },
         child: Icon(
           Icons.info,
